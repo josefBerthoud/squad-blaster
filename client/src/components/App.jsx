@@ -3,22 +3,23 @@ import axios from 'axios';
 import PartyForm from './PartyForm.jsx';
 import CharForm from './CharForm.jsx';
 import PartyList from './PartyList.jsx';
-
+import Results from './Results.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       party: [],
-      characters: []
+      characters: [],
+      display: "form"
     };
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.getParty = this.getParty.bind(this);
     this.addToParty = this.addToParty.bind(this);
+    this.toggleView = this.toggleView.bind(this);
   }
-  
-  //add componentdidupdate if characters.length > 5 call function to make best comp
-  //otherwise alert('not enough players to form a party!') and char and party state to empty
+
+  //add helper function to change display back to form on button click in results page
 
   onSubmitHandler(e) {
     e.preventDefault();
@@ -26,6 +27,14 @@ class App extends React.Component {
     let handler = e.target.getAttribute("handler");
     this.setState({
       [handler]: name
+    })
+  };
+
+  toggleView(e) {
+    e.preventDefault();
+    this.setState({
+      display: "form",
+      party: [],
     })
   };
 
@@ -53,9 +62,9 @@ class App extends React.Component {
       .then((results) => {
         console.log(results.data);
         this.setState({
-          characters: results.data
+          characters: results.data,
+          display: "results"
         })
-        //now can call helper function to make team, render component that shows comp
       })
       .catch((err) => {
         console.log(err);
@@ -64,23 +73,27 @@ class App extends React.Component {
   };
 
   render() {
-    let { form, party } = this.state;
-    let { onSubmitHandler, addToParty, getParty } = this;
+    let { party, characters, display } = this.state;
+    let { addToParty, getParty, toggleView } = this;
     return (
       <div>
         <div>
           <h2>SquadBlaster</h2>
-          <h4>A solution to all of your squad blastin' needs</h4>
+          <h4>A tool for indecisive Mythic+ players with too many alts</h4>
         </div>
         <div>
-          <span>Are you adding a character or building a party?</span>
-          <div>
-            < CharForm/>
-            < PartyForm addToParty={addToParty}/>
-          </div>
-          <div>
-            {party.length > 0 ? < PartyList party={party} getParty={getParty}/> : null}
-          </div>
+          {display === "form" ?
+            <div>
+              <span>Are you adding a character or building a party?</span>
+              <div>
+                < CharForm/>
+                < PartyForm addToParty={addToParty}/>
+              </div>
+              <div>
+                {party.length > 0 ? < PartyList party={party} getParty={getParty}/> : null}
+              </div>
+            </div>
+          : <div>< Results characters={characters} toggleView={toggleView}/></div>}
         </div> 
       </div>
     )
