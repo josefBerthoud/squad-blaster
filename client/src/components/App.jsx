@@ -3,22 +3,22 @@ import axios from 'axios';
 import PartyForm from './PartyForm.jsx';
 import CharForm from './CharForm.jsx';
 import PartyList from './PartyList.jsx';
-
+import Results from './Results.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       party: [],
-      characters: []
+      characters: [],
+      display: "form"
     };
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.getParty = this.getParty.bind(this);
     this.addToParty = this.addToParty.bind(this);
   }
-  
-  //add componentdidupdate if characters.length > 5 call function to make best comp
-  //otherwise alert('not enough players to form a party!') and char and party state to empty
+
+  //add helper function to change display back to form on button click in results page
 
   onSubmitHandler(e) {
     e.preventDefault();
@@ -53,7 +53,8 @@ class App extends React.Component {
       .then((results) => {
         console.log(results.data);
         this.setState({
-          characters: results.data
+          characters: results.data,
+          display: "results"
         })
         //now can call helper function to make team, render component that shows comp
       })
@@ -64,8 +65,8 @@ class App extends React.Component {
   };
 
   render() {
-    let { form, party } = this.state;
-    let { onSubmitHandler, addToParty, getParty } = this;
+    let { party, characters, display } = this.state;
+    let { addToParty, getParty } = this;
     return (
       <div>
         <div>
@@ -73,14 +74,18 @@ class App extends React.Component {
           <h4>A solution to all of your squad blastin' needs</h4>
         </div>
         <div>
-          <span>Are you adding a character or building a party?</span>
-          <div>
-            < CharForm/>
-            < PartyForm addToParty={addToParty}/>
-          </div>
-          <div>
-            {party.length > 0 ? < PartyList party={party} getParty={getParty}/> : null}
-          </div>
+          {display === "form" ?
+            <div>
+              <span>Are you adding a character or building a party?</span>
+              <div>
+                < CharForm/>
+                < PartyForm addToParty={addToParty}/>
+              </div>
+              <div>
+                {party.length > 0 ? < PartyList party={party} getParty={getParty}/> : null}
+              </div>
+            </div>
+          : < Results characters={characters}/>}
         </div> 
       </div>
     )
