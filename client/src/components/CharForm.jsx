@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class CharForm extends React.Component {
   constructor(props) {
@@ -7,19 +8,36 @@ class CharForm extends React.Component {
       username: '',
       region: '',
       realm: '',
-      charname: ''
+      charname: '',
     }
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
+    this.submitCharacter = this.submitCharacter.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
   }
   //adds a character to the database
 
-  onSubmitHandler(e) {
+  submitCharacter(e) {
     e.preventDefault();
+    let { username, region, realm, charname } = this.state;
     //makes axios request to add character to the database
     //on the complete callback from axios, reset the form states to empty
-    let { name } = e.target;
-    let handler = e.target.getAttribute("handler");
+    axios.post('/characters', {
+      user: username,
+      region: region,
+      realm: realm,
+      charname: charname
+    })
+    .then(() => {
+      console.log('successfully added!');
+      this.setState({
+        user: '',
+        region: '',
+        realm: '',
+        charname: ''
+      })
+    })
+    .catch((err) => {
+      console.log("errored");
+    })
   };
 
   onChangeHandler(e) {
@@ -30,7 +48,7 @@ class CharForm extends React.Component {
   };
 
   render() {
-    let { onChangeHandler, onSubmitHandler } = this.state;
+    let { onChangeHandler, submitCharacter } = this.state;
     return (
       <div>
         <form>
@@ -50,6 +68,7 @@ class CharForm extends React.Component {
             Character Name:
             <input type="text" name="charname" onChange={onChangeHandler}/>
           </label>
+          <button onSubmit={submitCharacter}>Add Character!</button>
         </form>
       </div>
     )
