@@ -16,12 +16,17 @@ class Results extends React.Component {
 
   componentDidMount() {
     let { characters } = this.state;
-    let bestTank = null;
-    let bestHealer = null;
+    let bestTank = {
+      tank: 0
+    };
+    let bestHealer = {
+      healer: 0
+    };
     let bestDPS = null;
     let averageScore = 0;
-    //check for naive solution
+    
     for (let i = 0; i < characters.length; i++) {
+      console.log(characters[i]);
       if (characters[i].hasOwnProperty(tank)) {
         if (characters[i].tank > bestTank.tank) {
           bestTank = characters[i];
@@ -49,8 +54,10 @@ class Results extends React.Component {
       //add to healer and add to score
       let name = characters[i].username
       if (name !== bestTank.username && name !== bestDPS[0].username && name !== bestDPS[1].username && name !== bestDPS[2].username) {
-        if (characters[i].healer > bestHealer.healer) {
-          bestHealer = characters[i];
+        if (characters[i].hasOwnProperty(healer)) {
+          if (characters[i].healer > bestHealer.healer) {
+            bestHealer = characters[i];
+          }
         }
       }
     }
