@@ -25,7 +25,10 @@ class App extends React.Component {
     let { onSubmitHandler } = this;
     return (
       <div>
-        <div></div>
+        <div>
+          <h2>SquadBlaster</h2>
+          <h4>A solution to all of your squad blastin' needs</h4>
+        </div>
         {form === null ? 
         <div>
           <span>Are you adding a character or building a party?</span>

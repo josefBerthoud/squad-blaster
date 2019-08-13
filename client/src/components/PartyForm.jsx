@@ -4,10 +4,12 @@ class PartyForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: ''
+      username: '',
+      region: '',
+      realm: ''
     }
   }
-
+  //adds a user to the selected party
   render() {
     return (
       <div>
