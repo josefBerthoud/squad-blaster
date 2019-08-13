@@ -6,18 +6,55 @@ class PartyForm extends React.Component {
     this.state = {
       username: '',
       region: '',
-      realm: ''
+      realm: '',
+    }
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onPlayerSubmit = this.onPlayerSubmit.bind(this);
+  }
+
+  onChangeHandler(e) {
+    name = e.target.getAttribute("name");
+    this.setState({
+      [name]: e.target.value
+    })
+  };
+  
+  onPlayerSubmit(e) {
+    console.log('called onplayersubmit!');
+    e.preventDefault();
+    let { username, region, realm } = this.state;
+    if (username !== '' && region !== '' && realm !== '') {
+      this.setState({
+        username: '',
+        region: '',
+        realm: '',
+      }, () => {this.props.addToParty({
+        username: username,
+        region: region,
+        realm: realm
+      })})
     }
   }
-  //adds a user to the selected party
+
   render() {
+    let { onChangeHandler, onPlayerSubmit } = this;
+    let { username, region, realm } = this.state;
     return (
       <div>
         <form>
           <label>
-            Add Party Member:
-            <input type="text"/>
+            Username:
+            <input type="text" value={username} name="username" onChange={onChangeHandler}/>
           </label>
+          <label>
+            Region:
+            <input type="text" value={region} name="region" onChange={onChangeHandler}/>
+          </label>
+          <label>
+            Realm:
+            <input type="text" value={realm} name="realm" onChange={onChangeHandler}/>
+          </label>
+          <button onClick={onPlayerSubmit}>Add Player To Party!</button>
         </form>
       </div>
     )
