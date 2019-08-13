@@ -16,7 +16,7 @@ const PartyList = (props) => {
           />
         )}
       </div>
-      <button onClick={getParty}>GO!</button>
+      <button onClick={getParty}>Blast Off!</button>
     </div>
   )
 };

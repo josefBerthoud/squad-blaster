@@ -78,7 +78,7 @@ class App extends React.Component {
     return (
       <div>
         <div>
-          <h2>SquadBuilder</h2>
+          <h2>SquadBlaster</h2>
           <h4>A tool for indecisive Mythic+ players with too many alts</h4>
         </div>
         <div>

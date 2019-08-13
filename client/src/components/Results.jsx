@@ -61,7 +61,7 @@ class Results extends React.Component {
             </div> : null}
           </div>
         </div>
-        <button onClick={toggleView}>Build Another party!</button>
+        <button onClick={toggleView}>Assemble New Squad!</button>
       </div>
     )
   }
