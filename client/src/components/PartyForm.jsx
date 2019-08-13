@@ -6,7 +6,7 @@ class PartyForm extends React.Component {
     this.state = {
       username: '',
       region: '',
-      realm: ''
+      realm: '',
     }
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onPlayerSubmit = this.onPlayerSubmit.bind(this);
@@ -19,43 +19,42 @@ class PartyForm extends React.Component {
     })
   };
   
-  //needs onsubmit to lift new party member up to app
   onPlayerSubmit(e) {
     console.log('called onplayersubmit!');
     e.preventDefault();
     let { username, region, realm } = this.state;
     if (username !== '' && region !== '' && realm !== '') {
-      this.props.addToParty({
-        username: username,
-        region: region,
-        realm: realm
-      });
       this.setState({
         username: '',
         region: '',
         realm: '',
-      })
+      }, () => {this.props.addToParty({
+        username: username,
+        region: region,
+        realm: realm
+      })})
     }
   }
 
   render() {
     let { onChangeHandler, onPlayerSubmit } = this;
+    let { username, region, realm } = this.state;
     return (
       <div>
         <form>
           <label>
             Username:
-            <input type="text" name="username" onChange={onChangeHandler}/>
+            <input type="text" value={username} name="username" onChange={onChangeHandler}/>
           </label>
           <label>
             Region:
-            <input type="text" name="region" onChange={onChangeHandler}/>
+            <input type="text" value={region} name="region" onChange={onChangeHandler}/>
           </label>
           <label>
             Realm:
-            <input type="text" name="realm" onChange={onChangeHandler}/>
+            <input type="text" value={realm} name="realm" onChange={onChangeHandler}/>
           </label>
-          <button onClick={onPlayerSubmit}>Add To Party!</button>
+          <button onClick={onPlayerSubmit}>Add Player To Party!</button>
         </form>
       </div>
     )

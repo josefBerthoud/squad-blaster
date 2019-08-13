@@ -25,7 +25,8 @@ app.post('/characters', (req, res) => {
 });
 
 app.get('/getsquad', (req, res) => {
-  let { user1, user2, user3, user4, user5 } = req.body;
+  console.log(req.query);
+  let { user1, user2, user3, user4, user5 } = req.query;
   let query = {
     text: 'SELECT * FROM characters where username=$1 OR username=$2 OR username=$3 OR username=$4 OR username=$5',
     values: [user1, user2, user3, user4, user5],
@@ -37,6 +38,7 @@ app.get('/getsquad', (req, res) => {
       let { rows } = results;
       // console.log(rows);
       helpers.getRatings(rows, (err, ratings) => {
+        console.log(rows);
         if (err) {
           res.send(err);
         } else {

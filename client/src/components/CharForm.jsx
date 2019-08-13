@@ -36,7 +36,7 @@ class CharForm extends React.Component {
       })
     })
     .catch((err) => {
-      console.log("errored");
+      console.log(err);
     })
   };
 
@@ -48,25 +48,26 @@ class CharForm extends React.Component {
   };
 
   render() {
-    let { onChangeHandler, submitCharacter } = this.state;
+    let { onChangeHandler, submitCharacter } = this;
+    let { username, region, realm, charname } = this.state;
     return (
       <div>
         <form>
           <label>
             Username:
-            <input type="text" name="username" onChange={onChangeHandler}/>
+            <input type="text" value={username} name="username" onChange={onChangeHandler}/>
           </label>
           <label>
             Region:
-            <input type="text" name="region" onChange={onChangeHandler}/>
+            <input type="text" value={region} name="region" onChange={onChangeHandler}/>
           </label>
           <label>
             Realm:
-            <input type="text" name="realm" onChange={onChangeHandler}/>
+            <input type="text" value={realm} name="realm" onChange={onChangeHandler}/>
           </label>
           <label>
             Character Name:
-            <input type="text" name="charname" onChange={onChangeHandler}/>
+            <input type="text" value={charname} name="charname" onChange={onChangeHandler}/>
           </label>
           <button onSubmit={submitCharacter}>Add Character!</button>
         </form>

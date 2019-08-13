@@ -2,7 +2,7 @@ import React from 'react';
 import PartyListEntry from './PartyListEntry.jsx';
 
 const PartyList = (props) => {
-  let { party } = props;
+  let { party, getParty } = props;
   return (
     <div>
       <h4>Party:</h4>
@@ -16,6 +16,7 @@ const PartyList = (props) => {
           />
         )}
       </div>
+      <button onClick={getParty}>GO!</button>
     </div>
   )
 };

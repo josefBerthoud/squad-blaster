@@ -42,15 +42,20 @@ class App extends React.Component {
     let { party } = this.state;
     if (this.state.party.length === 5) {
       axios.get('/getsquad', {
-        user1: party[0],
-        user2: party[1],
-        user3: party[2],
-        user4: party[3],
-        user5: party[4],
+        params: {
+          user1: party[0].username,
+          user2: party[1].username,
+          user3: party[2].username,
+          user4: party[3].username,
+          user5: party[4].username,
+        }
       })
       .then((results) => {
-        console.log(results);
-        //setstate to add all of the results to characters
+        console.log(results.data);
+        this.setState({
+          characters: results.data
+        })
+        //now can call helper function to make team, render component that shows comp
       })
       .catch((err) => {
         console.log(err);
@@ -60,7 +65,7 @@ class App extends React.Component {
 
   render() {
     let { form, party } = this.state;
-    let { onSubmitHandler, addToParty } = this;
+    let { onSubmitHandler, addToParty, getParty } = this;
     return (
       <div>
         <div>
@@ -74,7 +79,7 @@ class App extends React.Component {
             < PartyForm addToParty={addToParty}/>
           </div>
           <div>
-            {party.length > 0 ? < PartyList party={party}/> : null}
+            {party.length > 0 ? < PartyList party={party} getParty={getParty}/> : null}
           </div>
         </div> 
       </div>
