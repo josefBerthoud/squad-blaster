@@ -16,6 +16,7 @@ class App extends React.Component {
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.getParty = this.getParty.bind(this);
     this.addToParty = this.addToParty.bind(this);
+    this.toggleView = this.toggleView.bind(this);
   }
 
   //add helper function to change display back to form on button click in results page
@@ -26,6 +27,14 @@ class App extends React.Component {
     let handler = e.target.getAttribute("handler");
     this.setState({
       [handler]: name
+    })
+  };
+
+  toggleView(e) {
+    e.preventDefault();
+    this.setState({
+      display: "form",
+      party: [],
     })
   };
 
@@ -56,7 +65,6 @@ class App extends React.Component {
           characters: results.data,
           display: "results"
         })
-        //now can call helper function to make team, render component that shows comp
       })
       .catch((err) => {
         console.log(err);
@@ -66,12 +74,12 @@ class App extends React.Component {
 
   render() {
     let { party, characters, display } = this.state;
-    let { addToParty, getParty } = this;
+    let { addToParty, getParty, toggleView } = this;
     return (
       <div>
         <div>
-          <h2>SquadBlaster</h2>
-          <h4>A solution to all of your squad blastin' needs</h4>
+          <h2>SquadBuilder</h2>
+          <h4>A tool for indecisive Mythic+ players with too many alts</h4>
         </div>
         <div>
           {display === "form" ?
@@ -85,7 +93,7 @@ class App extends React.Component {
                 {party.length > 0 ? < PartyList party={party} getParty={getParty}/> : null}
               </div>
             </div>
-          : < Results characters={characters}/>}
+          : <div>< Results characters={characters} toggleView={toggleView}/></div>}
         </div> 
       </div>
     )
