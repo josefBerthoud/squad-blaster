@@ -17,17 +17,19 @@ class Results extends React.Component {
   componentDidMount() {
     let { characters } = this.state;
     let bestTank = {
-      tank: 0
+      tank: 0,
+      username: ''
     };
     let bestHealer = {
-      healer: 0
+      healer: 0,
+      username: ''
     };
-    let bestDPS = null;
+    let bestDPS = [{username: ''}, {username: ''}, {username: ''}];
     let averageScore = 0;
+    let dpsers = [];
     
     for (let i = 0; i < characters.length; i++) {
-      console.log(characters[i]);
-      if (characters[i].hasOwnProperty(tank)) {
+      if (characters[i].hasOwnProperty('tank')) {
         if (characters[i].tank > bestTank.tank) {
           bestTank = characters[i];
           characters.splice(i, 1);
@@ -35,26 +37,22 @@ class Results extends React.Component {
       }
     }
     for (let i = 0; i < characters.length; i++) {
-      let dpsers = [];
-      if (characters[i].hasOwnProperty(dps)) {
+      if (characters[i].hasOwnProperty('dps')) {
+        console.log('adding a player to dpsers array');
         dpsers.push(characters[i]);
       }
-      if (dpsers.length >= 4) {
-        //find highest average rating group of 3 where the username is not repeated
-        let results = helpers.findHighestDps(dpsers);
-        averageScore += results[0];
-        bestDPS = results[1];
-      } else {
-        //not enough roles to make a full party
-        console.log('not enough roles represented by this party');
-      }
     }
+    let results = helpers.findHighestDps(dpsers);
+    averageScore += results[0];
+    bestDPS = results[1];
+    console.log(results);
+
     for (let i = 0; i < characters.length; i++) {
       //if new high healer score and not same user as any current high scores
       //add to healer and add to score
       let name = characters[i].username
       if (name !== bestTank.username && name !== bestDPS[0].username && name !== bestDPS[1].username && name !== bestDPS[2].username) {
-        if (characters[i].hasOwnProperty(healer)) {
+        if (characters[i].hasOwnProperty('healer')) {
           if (characters[i].healer > bestHealer.healer) {
             bestHealer = characters[i];
           }
@@ -63,6 +61,7 @@ class Results extends React.Component {
     }
     averageScore += bestTank.tank;
     averageScore += bestHealer.healer;
+    console.log(bestTank, bestHealer, bestDPS);
     this.setState({
       tank: bestTank,
       healer: bestHealer,
@@ -78,21 +77,21 @@ class Results extends React.Component {
         {tank ?
         <div>
           <div>Tank:</div>
-          <div>{tank}</div>
+          <div>{tank.username}</div>
         </div>
         : null}
         {healer ?
         <div>
           <div>Healer:</div>
-          <div>{healer}</div>
+          <div>{healer.username}</div>
         </div>
         : null}
         {dps ?
         <div>
           <div>DPS:</div>
-          <div>{dps[0]}</div>
-          <div>{dps[1]}</div>
-          <div>{dps[2]}</div>
+          <div>{dps[0].username}</div>
+          <div>{dps[1].username}</div>
+          <div>{dps[2].username}</div>
         </div>
         : null}
       </div>

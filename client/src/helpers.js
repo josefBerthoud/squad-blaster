@@ -4,13 +4,13 @@ const findHighestDps = (chars) => {
   for (let a = 0; a < chars.length; a++) {
     for (let b = 0; b < chars.length; b++) {
       for (let c = 0; c < chars.length; c++) {
-        if (a.username !== b.username && a.username !== c.username && b.username !== c.username) {
+        if (chars[a].username !== chars[b].username && chars[a].username !== chars[c].username && chars[b].username !== chars[c].username) {
           //unique set of players
-          if (a.hasOwnProperty(dps) && b.hasOwnProperty(dps) && c.hasOwnProperty(dps)) {
-            let avg = (a.dps + b.dps + c.dps) / 3;
+          if (chars[a].hasOwnProperty('dps') && chars[b].hasOwnProperty('dps') && chars[c].hasOwnProperty('dps')) {
+            let avg = (chars[a].dps + chars[b].dps + chars[c].dps) / 3;
             if (avg > bestAvg) {
               bestAvg = avg;
-              bestComp = [a, b, c];
+              bestComp = [chars[a], chars[b], chars[c]];
             }
           }
         }
