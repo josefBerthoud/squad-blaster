@@ -1,5 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import {
+  FlexWrapper,
+  FormBlock,
+  FlexInput,
+  CharFormStyling,
+  FormFlex,
+} from '../styled/StyledApp.jsx';
 
 class CharForm extends React.Component {
   constructor(props) {
@@ -51,27 +58,27 @@ class CharForm extends React.Component {
     let { onChangeHandler, submitCharacter } = this;
     let { username, region, realm, charname } = this.state;
     return (
-      <div>
-        <form>
+      <CharFormStyling>
+        <FormFlex>
           <label>
             Username:
-            <input type="text" value={username} name="username" onChange={onChangeHandler}/>
+            <FlexInput type="text" value={username} name="username" onChange={onChangeHandler}/>
           </label>
           <label>
             Region:
-            <input type="text" value={region} name="region" onChange={onChangeHandler}/>
+            <FlexInput type="text" value={region} name="region" onChange={onChangeHandler}/>
           </label>
           <label>
             Realm:
-            <input type="text" value={realm} name="realm" onChange={onChangeHandler}/>
+            <FlexInput type="text" value={realm} name="realm" onChange={onChangeHandler}/>
           </label>
           <label>
             Character Name:
-            <input type="text" value={charname} name="charname" onChange={onChangeHandler}/>
+            <FlexInput type="text" value={charname} name="charname" onChange={onChangeHandler}/>
           </label>
           <button onSubmit={submitCharacter}>Add Character!</button>
-        </form>
-      </div>
+        </FormFlex>
+      </CharFormStyling>
     )
   }
 };

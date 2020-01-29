@@ -1,4 +1,11 @@
 import React from 'react';
+import {
+  FlexWrapper,
+  FormBlock,
+  FlexInput,
+  PartyFormStyling,
+  FormFlex,
+} from '../styled/StyledApp.jsx';
 
 class PartyForm extends React.Component {
   constructor(props) {
@@ -40,23 +47,23 @@ class PartyForm extends React.Component {
     let { onChangeHandler, onPlayerSubmit } = this;
     let { username, region, realm } = this.state;
     return (
-      <div>
-        <form>
+      <PartyFormStyling>
+        <FormFlex>
           <label>
             Username:
-            <input type="text" value={username} name="username" onChange={onChangeHandler}/>
+            <FlexInput type="text" value={username} name="username" onChange={onChangeHandler}/>
           </label>
           <label>
             Region:
-            <input type="text" value={region} name="region" onChange={onChangeHandler}/>
+            <FlexInput type="text" value={region} name="region" onChange={onChangeHandler}/>
           </label>
           <label>
             Realm:
-            <input type="text" value={realm} name="realm" onChange={onChangeHandler}/>
+            <FlexInput type="text" value={realm} name="realm" onChange={onChangeHandler}/>
           </label>
           <button onClick={onPlayerSubmit}>Add Player To Party!</button>
-        </form>
-      </div>
+        </FormFlex>
+      </PartyFormStyling>
     )
   }
 };

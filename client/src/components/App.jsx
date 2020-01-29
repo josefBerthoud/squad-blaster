@@ -4,6 +4,11 @@ import PartyForm from './PartyForm.jsx';
 import CharForm from './CharForm.jsx';
 import PartyList from './PartyList.jsx';
 import Results from './Results.jsx';
+import { 
+  FlexWrapper,
+  AppWrapper,
+  FormBlock
+} from '../styled/StyledApp.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -76,7 +81,7 @@ class App extends React.Component {
     let { party, characters, display } = this.state;
     let { addToParty, getParty, toggleView } = this;
     return (
-      <div>
+      <AppWrapper>
         <div>
           <h2>SquadBlaster</h2>
           <h4>A tool for indecisive Mythic+ players with too many alts</h4>
@@ -85,17 +90,17 @@ class App extends React.Component {
           {display === "form" ?
             <div>
               <span>Are you adding a character or building a party?</span>
-              <div>
+              <FlexWrapper>
                 < CharForm/>
                 < PartyForm addToParty={addToParty}/>
-              </div>
+              </FlexWrapper>
               <div>
                 {party.length > 0 ? < PartyList party={party} getParty={getParty}/> : null}
               </div>
             </div>
           : <div>< Results characters={characters} toggleView={toggleView}/></div>}
         </div> 
-      </div>
+      </AppWrapper>
     )
   }
 }
